@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "dist": "electron-builder",
     "prettier": "prettier --write \"*.js\""
   },
   "author": "Meriadec Pillet <meriadec.pillet@gmail.com>",

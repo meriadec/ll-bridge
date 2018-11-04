@@ -1,7 +1,9 @@
 const { fork } = require("child_process");
+const path = require("path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 
 let mainWindow;
+let child;
 
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
@@ -11,9 +13,12 @@ function createWindow() {
   });
 
   // setup proxy, send stdout to window
-  const forkPath = "node_modules/@ledgerhq/hw-http-proxy-devserver/bin.js";
-  const child = fork(forkPath, [], { silent: true });
   const onData = msg => mainWindow.webContents.send("proxy-stdout", msg);
+  const forkPath = path.resolve(
+    __dirname,
+    "node_modules/@ledgerhq/hw-http-proxy-devserver/bin.js"
+  );
+  child = fork(forkPath, [], { silent: true });
   child.stdout.on("data", onData);
   child.stderr.on("data", onData);
 }
@@ -21,9 +26,8 @@ function createWindow() {
 app.on("ready", createWindow);
 
 app.on("window-all-closed", function() {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  child.kill("SIGINT");
+  app.quit();
 });
 
 app.on("activate", function() {
