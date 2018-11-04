@@ -1,0 +1,20 @@
+{
+  "name": "ll-bridge",
+  "version": "1.0.0",
+  "description": "Bridge for LL mobile",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "prettier": "prettier --write \"*.js\""
+  },
+  "author": "Meriadec Pillet <meriadec.pillet@gmail.com>",
+  "devDependencies": {
+    "electron": "^3.0.4",
+    "electron-builder": "^20.31.2",
+    "prettier": "^1.14.3"
+  },
+  "dependencies": {
+    "@ledgerhq/hw-http-proxy-devserver": "^4.27.1",
+    "qrcode": "^1.3.0"
+  }
+}
